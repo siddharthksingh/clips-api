@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from app.database import SessionLocal, engine
 from app.models import Base, Clip
-from app.schemas import ClipBase, ClipStats
+from app.schemas import ClipBase, ClipStats, ClipCreate, ClipResponse
 from starlette_exporter import PrometheusMiddleware, handle_metrics
 from prometheus_client import Counter
 import os
@@ -76,6 +76,16 @@ def get_stats(clip_id: int, db: Session = Depends(get_db)):
         "genre": clip.genre,
         "duration": clip.duration
     }
+
+
+@app.post("/clips", response_model=ClipResponse)
+def create_clip(clip_data: ClipCreate, db: Session = Depends(get_db)):
+    new_clip = Clip(**clip_data.model_dump())
+    db.add(new_clip)
+    db.commit()
+    db.refresh(new_clip)
+    return new_clip
+
 
 # if __name__ == "__main__":
 #     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

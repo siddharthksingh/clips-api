@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class ClipBase(BaseModel):
@@ -18,6 +18,21 @@ class ClipStats(BaseModel):
     title: str
     genre: str | None
     duration: str | None
+    play_count: int
+
+    class Config:
+        orm_mode = True
+
+
+class ClipCreate(BaseModel):
+    title: str
+    description: str
+    genre: str
+    duration: str
+    audio_url: HttpUrl
+
+class ClipResponse(ClipCreate):
+    id: int
     play_count: int
 
     class Config:
