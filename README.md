@@ -24,6 +24,7 @@ Set your environment variables using the sample below:
   POSTGRES_PASSWORD=<password>
   POSTGRES_DB=clips_db`
 
+
 In bash:
 ```bash
 docker-compose up --build
