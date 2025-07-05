@@ -1,0 +1,20 @@
+.env.*
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Docker
+*.log
+*.pid
+*.sock
+
+# VSCode/PyCharm
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# PostgreSQL volume
+pgdata/
+grafana-storage/
